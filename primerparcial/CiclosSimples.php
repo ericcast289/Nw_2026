@@ -1,82 +1,97 @@
 <?php
-$numero = 0;
-$invertir = false;
-$mensaje = "";
-$resultado = "";
 
-if(isset($_POST["btnMostrar"])){
+$txtNombre = "";
+$intCiclos = 10;
+$txtTipoCiclo = "FOR";
+$arrResultBuffer = [];
+$arrCicloProcesado = false;
 
-    $numero = $_POST["cmbNumero"] ?? 0;
-    $mensaje = $_POST["txtMensaje"] ?? "";
+if (isset($_POST["btnProcesar"])) {
+    $txtNombre = $_POST["txtNombre"] ?? "";
+    $intCiclos = intval(($_POST["intCiclos"] ?? "10"));
+    $txtTipoCiclo = $_POST["txtTipoCiclo"] ?? "FOR";
+    switch ($txtTipoCiclo) {
+        case "FOR":
+            // $arrResultBuffer[] = "Ciclo For para " . number_format($intCiclos) . " ciclos";
+            $arrResultBuffer[] = sprintf("Ciclo For para %s ciclos <hr/>", number_format($intCiclos));
+            $arrResultBuffer[] = "<pre>";
+            for ($i = 0; $i < $intCiclos; $i++) {
+                $arrResultBuffer[] = sprintf("%d\t%s <br/>", ($i + 1), $txtNombre);
+            }
+            $arrResultBuffer[] = "</pre>";
+            // for ( $i = $intCiclos ; $i > 0; $i--) {
 
-    $invertir = isset($_POST["chkInvertir"]);
-
-    if($invertir){
-        // Descendente
-        for($i = $numero; $i >= 1; $i--){
-            $resultado .= $i . " " . $mensaje . "<br>";
-        }
-    }else{
-        // Ascendente
-        for($i = 1; $i <= $numero; $i++){
-            $resultado .= $i . " " . $mensaje . "<br>";
-        }
+            // }
+            break;
+        case "WHILE":
+            $arrResultBuffer[] = sprintf("Ciclo While para %s ciclos <hr/>", number_format($intCiclos));
+            $arrResultBuffer[] = "<pre>";
+            $i = 0;
+            while ($i < $intCiclos) {
+                $arrResultBuffer[] = sprintf("%d\t%s <br/>", ($i + 1), $txtNombre);
+                $i++;
+            }
+            $arrResultBuffer[] = "</pre>";
+            break;
+        case "DO":
+            $arrResultBuffer[] = sprintf("Ciclo Do-While para %s ciclos <hr/>", number_format($intCiclos));
+            $arrResultBuffer[] = "<pre>";
+            $i = 0;
+            do {
+                $arrResultBuffer[] = sprintf("%d\t%s <br/>", ($i + 1), $txtNombre);
+                $i++;
+            } while ($i < $intCiclos);
+            $arrResultBuffer[] = "</pre>";
+            break;
+        default:
     }
+    $arrCicloProcesado = true;
 }
-?>
 
+?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Iteraciones PHP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciclos</title>
 </head>
+
 <body>
+    <h1>Ciclos en PHP</h1>
+    <form action="ciclos.php" method="post">
+        <label for="txtNombre">Nombre a Repetir</label>
+        <input type="text" name="txtNombre" id="txtNombre"
+            placeholder="Nombre a Repetir en Ciclo"
+            value="<?php echo $txtNombre; ?>" />
+        <br />
+        <label for="intCiclos">Cantidad de Ciclos</label>
+        <select name="intCiclos" id="intCiclos">
+            <option value="0">0</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+        </select>
+        <br />
+        <label for="txtTipoCiclo">Tipo de Ciclo a Usar</label>
+        <select name="txtTipoCiclo" id="txtTipoCiclo">
+            <option value="FOR">for</option>
+            <option value="WHILE">while</option>
+            <option value="DO">do-while</option>
+        </select>
+        <br />
+        <button name="btnProcesar" id="btnProcesar">Procesar</button>
+    </form>
 
-<h2>Iteraciones con PHP</h2>
-
-<form method="post">
-
-    <label>Seleccione el valor a iterar:</label>
-    <select name="cmbNumero">
-        <?php
-        for($x = 1; $x <= 10; $x++){
-            echo "<option value='$x'>$x</option>";
-        }
-        ?>
-    </select>
-
-    <br><br>
-
-    <label>Escriba un mensaje:</label>
-    <input type="text" name="txtMensaje" required>
-
-    <br><br>
-
-    <input type="checkbox" name="chkInvertir">
-    <label>Iterar Inversamente (Descendente)</label>
-
-    <br><br>
-
-    <input type="submit" name="btnMostrar" value="Mostrar">
-
-</form>
-
-<hr>
-
-<?php
-if($resultado != "")
-    {
-
-    if($invertir){
-        echo "<h3>Descendente</h3>";
-    }else{
-        echo "<h3>Ascendente</h3>";
+    <?php
+    if ($arrCicloProcesado) {
+        echo "<h2>Resultado</h2>";
+        echo implode("", $arrResultBuffer);
     }
-
-    echo $resultado;
-}
-?>
-
+    ?>
 </body>
+
 </html>

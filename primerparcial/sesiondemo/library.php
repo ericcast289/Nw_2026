@@ -1,59 +1,53 @@
 <?php
-
 session_start();
 
-function CleanupSession() {
+function cleanupSession()
+{
     $_SESSION = [];
     session_destroy();
-  
 }
 
 const SESSION_KEY = "nw_session_demo";
 
-
-function addtoSession($strKey, $value) {
-    if (!isset($_SESSION[SESSION_KEY])) 
-    {
-        $_SESSION[SESSION_KEY][$strKey] = $value;
-        else
-        {
-            $SESSION[SESSION_KEY][$strKey] = [];
-            $_SESSION[SESSION_KEY][$strKey] = $value;
-        }
-    }
-function getFromSession($strKey) 
+function addToSession($strKey, $value)
 {
-    if (isset($_SESSION[SESSION_KEY][$strKey])
-        && isset($_SESSION[SESSION_KEY][$strKey])) 
-    {
+    if (isset($_SESSION[SESSION_KEY])) {
+        $_SESSION[SESSION_KEY][$strKey] = $value;
+    } else {
+        $_SESSION[SESSION_KEY] = [];
+        $_SESSION[SESSION_KEY][$strKey] = $value;
+    }
+}
+
+function getFromSession($strKey)
+{
+    if (
+        isset($_SESSION[SESSION_KEY])
+        && isset($_SESSION[SESSION_KEY][$strKey])
+    ) {
         return $_SESSION[SESSION_KEY][$strKey];
     }
     return null;
 }
 
-const CONTACTS_KEY = "contactos";
-function addContact($nombre , $apellido, $telefono) 
+const CONTACTOS_KEY = "contactos";
+function addContact($nombre, $correo, $telefono)
 {
-    $contact = 
-    [
+    $contacto = [
         "nombre" => $nombre,
-        "apellido" => $apellido,
+        "correo" => $correo,
         "telefono" => $telefono
     ];
-    $contactos = getFromSession(CONTACTS_KEY);
-    if ($contactos === null) 
-    {
+    $contactos = getFromSession(CONTACTOS_KEY);
+    if (is_null($contactos)) {
         $contactos = [];
-    }else
-    {
-        $contactos[] = $contact;
     }
-   
-    addtoSession(CONTACTS_KEY, $contactos);
+    $contactos[] = $contacto;
+    addToSession(CONTACTOS_KEY, $contactos);
 }
 
-function getContacts() 
+function getContacts()
 {
-    $contactos = getFromSession(CONTACTS_KEY) ?? [];
+    $contactos = getFromSession(CONTACTOS_KEY) ?? [];
     return $contactos;
 }

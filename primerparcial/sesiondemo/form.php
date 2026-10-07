@@ -1,44 +1,56 @@
 <?php
+/*
+include "library.php";
+
+include_once "library.php";
+
+require "library.php";
+
+require_once "library.php";
+
+*/
 
 require_once "library.php";
 
 $txtNombre = "";
-$txtApellido = "";
+$txtEmail = "";
 $txtTelefono = "";
 
-if (isset($_POST['btnEnviar'])) {
-    $txtNombre = $_POST["txtnombre"] ?? '';
-    $txtApellido = $_POST["txtapellido"] ?? '';
-    $txtTelefono = $_POST["txttelefono"] ?? '';
+if (isset($_POST["btnEnviar"])) {
+    $txtNombre = $_POST["txtNombre"] ?? "";
+    $txtEmail = $_POST["txtEmail"] ?? "";
+    $txtTelefono = $_POST["txtTelefono"] ?? "";
 
-    addContact($txtNombre, $txtApellido, $txtTelefono);
+    addContact($txtNombre, $txtEmail, $txtTelefono);
 }
 
-
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Datos de Formulario</title>
 </head>
+
 <body>
     <h1>Formulario</h1>
     <form action="form.php" method="post">
-    <label for="nombre">Nombre</label>
-    <input type="text" name="nombre" id="nombre"
-    placeholder="Nombre Completo" value="<?php echo $_POST['txtnombre'] ?? ''; ?>"
-    <br>
-    <label for="apellido">Apellido</label>
-    <input type="text" name="apellido" id="apellido"
-    placeholder="Apellido" value="<?php echo $_POST['txtapellido'] ?? ''; ?>"
-    <br>
-    <label for="telefono">Teléfono</label>
-    <input type="text" name="telefono" id="telefono"
-    placeholder="Número de Teléfono" value="<?php echo $_POST['txttelefono'] ?? ''; ?>"
-    <br>
-    <input type="submit" value="Enviar">
+        <label for="txtNombre">Nombre</label>
+        <input type="text" name="txtNombre" id="txtNombre"
+            placeholder="Nombre Completo" value="<?php echo $txtNombre; ?>" />
+        <br />
+        <label for="txtEmail">Correo Electrónico</label>
+        <input type="email" name="txtEmail" id="txtEmail"
+            placeholder="correo electrónico" value="<?php echo $txtEmail; ?>" />
+        <br />
+        <label for="txtTelefono">Teléfono</label>
+        <input type="text" name="txtTelefono" id="txtTelefono"
+            placeholder="teléfono" value="<?php echo $txtTelefono; ?>" />
+        <br />
+        <button type="submit" name="btnEnviar">Guardar</button>
     </form>
-
 </body>
+
 </html>
