@@ -1,0 +1,11 @@
+{
+    "name": "unicah/oop",
+    "description": "Demo Academico para PHP Orientada a Objetos",
+    "type": "proyecto",
+    "autoload": {
+        "psr-4": {
+            "Unicah\\Oop\\": "src/"
+        }
+    },
+    "require": {}
+}
