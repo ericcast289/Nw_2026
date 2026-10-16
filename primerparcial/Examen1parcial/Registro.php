@@ -18,7 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $portafolio = isset($_POST['portafolio']) ? trim($_POST['portafolio']) : '';
     $formato = isset($_POST['formato']) ? $_POST['formato'] : '';
 
-    if ($nombre == '' || $correo == '' || $password == '' || $telefono == '' || empty($especializacion) || $fecha_nacimiento == '' || $motor == '' || $portafolio == '' || $formato == '') {
+    if ($nombre == '' || $correo == '' || $password == '' || $telefono == '' || empty($especializacion) || $fecha_nacimiento == '' || $motor == '' || $portafolio == '' || $formato == '') 
+        {
         $error = "Por favor, complete todos los campos obligatorios del formulario.";
     } else {
         $nuevo_registro = array(

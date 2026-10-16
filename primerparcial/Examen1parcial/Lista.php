@@ -44,7 +44,7 @@ session_start();
     ?>
 
     <br>
-    <a href="index.php">Registrar otro miembro</a>
+    <a href="Registro.php">Registrar otro miembro</a>
 
 </body>
 </html>
