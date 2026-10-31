@@ -11,6 +11,8 @@ class Me extends PublicController
       public function run() :void {
         $tmpViewData = MeDao::getProfile();
         $tmpViewdata["txtNombre"] = "";
+        $tmpProyectos = ProyectosDao::getAll();
+        $tmpViewData["proyectos"] = $tmpProyectos;
         if ($this->isPostBack()) 
         {
            $tmpViewData["txtNombre"] = $_POST["txtNombre"] ?? "";
@@ -18,6 +20,8 @@ class Me extends PublicController
                    "Bienvenido %s", 
                     $tmpViewData["txtNombre"]
            ) :"" ;
+
+           
            ProyectosDao::crear($tmpViewData["txtNombre"], 'ACT', 'yo', 'fulano');
         }
         Renderer::render("me", $tmpViewData);
